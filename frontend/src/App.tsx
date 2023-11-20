@@ -22,11 +22,26 @@ const defaultPost = {
  * @returns 
  */
 function App() {
-  const [posts, setPosts] = useState<post[]>(data)
+  const [posts, setPosts] = useState<post[]>([])
   const [filteredPosts, setFilteredPosts] = useState<filteredPosts>({})
   const [filter, setFilter] = useState<string>("week")
   const [edit, setEdit] = useState<boolean>(false)
   const [editPost, setEditPost] = useState<editPost>(defaultPost)
+
+  useEffect(()=>{
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:3100/get-posts')
+        const jsonData = await response.json();
+        setPosts(jsonData);
+      } catch (e) {
+        console.log(`fetch error: ${(e as Error).message} therefore loading posts from a file`)
+        setPosts(data)
+      }
+      
+    }
+    fetchPosts()
+  },[])
 
   useEffect(()=>{
     // function to group posts by week
@@ -136,7 +151,7 @@ function App() {
   return (
     <>
       <div className='filters'>
-        Sort by: 
+        Group by: 
         <select id="filter" className='filter' name="filter" onChange={handleFilterChange} value={filter} data-testid="filter">
           <option value="week">Week</option>
           <option value="location">Location</option>
