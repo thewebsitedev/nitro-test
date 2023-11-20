@@ -7,11 +7,13 @@ import {
 import App from "./App";
 import { groupPostsByLocation } from "./Helper";
 
-test("renders first week text", () => {
+test("renders first week text", async () => {
   render(<App />);
   // initial category heading should be present
-  const weekText = screen.getByText(/Week 11, Year 2019/i);
-  expect(weekText).toBeInTheDocument();
+  await waitFor(() => {
+    const weekText = screen.getByText(/Week 11, Year 2019/i);
+    expect(weekText).toBeInTheDocument();
+  });
 });
 
 test("three group options", () => {
@@ -76,17 +78,23 @@ test("groups posts by location correctly", () => {
     expect(grouped["San Francisco"].length).toBe(2);
 });
 
-test("renders posts based on filteredPosts", () => {
+test("renders posts based on filteredPosts", async () => {
   render(<App />);
   // posts renders properly
-  const postElement = screen.queryByText(
-    "Digital transformation isn't just a buzzword"
-  );
-  expect(postElement).toBeInTheDocument();
+  await waitFor(() => {
+    const postElement = screen.queryByText(
+      "Digital transformation isn't just a buzzword"
+    );
+    expect(postElement).toBeInTheDocument();
+  });
 });
 
 test("editing post works correctly", async () => {
   render(<App />);
+  await waitFor(() => {
+    const weekText = screen.getByText(/Week 11, Year 2019/i);
+    expect(weekText).toBeInTheDocument();
+  });
   // get all edit post buttons
   const editButtons = screen.getAllByAltText("edit post");
   // click the first button

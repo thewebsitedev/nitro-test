@@ -12,7 +12,7 @@ Clicking a post element reveals additional post related information such as auth
 
 You can edit a post's author and location by clicking on the edit icon (a small pencil icon next to the post date). The modal window which appears on clicking the edit icon contains the form to edit author and location of that particular post.
 
-## Frontend Installation
+### Frontend Installation
 
 1. Navigate to the frontend folder through command line.
 2. Run `npm install` to install all the dependencies.
@@ -38,4 +38,4 @@ API URL: `http://localhost:3100/get-posts`
 
 ### Steps to run backend
 
-Use `node index.js` command in the command line to run the backend locally in a dev environment.
+Run `node index.js` command in the command line to run the backend locally in a dev environment.
