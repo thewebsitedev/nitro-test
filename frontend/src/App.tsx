@@ -1,27 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.scss'
 import data from './posts.json'
-
-// Post type defintion
-type post = {
-  id: number,
-  location: string,
-  time: string,
-  author: string,
-  text: string
-}
-
-// Filtered posts type definition
-type filteredPosts = {
-  [key: string]: post[]
-}
-
-// Post type definition for the post being edited
-type editPost = {
-  key: string,
-  index: number,
-  post: post
-}
+import { post, filteredPosts, editPost } from './Types'
+import { getWeekNumber, groupPostsByAuthor, groupPostsByLocation } from './Helper'
 
 // default post value to make sure form input is controlled
 const defaultPost = {
@@ -75,46 +56,6 @@ function App() {
         break;
     }
   },[filter, posts])
-
-  // function to group posts by location
-  const groupPostsByLocation = (posts: post[]): Record<string, post[]> => {
-    return posts.reduce((acc: Record<string, post[]>, post: post) => {
-        // Initialize the array for this location if it doesn't exist
-        if (!acc[post.location]) {
-            acc[post.location] = [];
-        }
-        // Add the post to the corresponding location
-        acc[post.location].push(post);
-        return acc;
-    }, {});
-  }
-  // function to group posts by author
-  const groupPostsByAuthor = (posts: post[]): Record<string, post[]> => {
-    return posts.reduce((acc: Record<string, post[]>, post: post) => {
-        // Initialize the array for this author if it doesn't exist
-        if (!acc[post.author]) {
-            acc[post.author] = [];
-        }
-        // Add the post to the corresponding author
-        acc[post.author].push(post);
-        return acc;
-    }, {});
-  }
-
-  // helper function to convert 'time' field to a Date object and get the week number
-  const getWeekNumber = (timestamp: string) => {
-    let date = new Date(parseInt(timestamp) * 1000); // Convert Unix timestamp to milliseconds
-    // Copy date so don't modify original
-    date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    // Set to nearest Thursday: current date + 4 - current day number
-    date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
-    // Get first day of year
-    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-    // Calculate full weeks to nearest Thursday
-    const weekNo = Math.ceil((((date.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
-    // Return array of year and week number
-    return [date.getUTCFullYear(), weekNo];
-  }
 
   // handles change in filter value
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -253,7 +194,7 @@ function App() {
             <label htmlFor="location">Location</label>
             <input type="text" value={editPost?.post.location} onChange={handleLocationChange} name="location" id="location" />
           </div>
-          <input type="submit" value="Submit" name="submit" id="submit" onClick={handleFormChange} />
+          <input type="submit" value="Submit" name="submit" id="submit" data-testid="submit" onClick={handleFormChange} />
         </form>
         <button className='form-close' onClick={handleCloseClick}>
           <img src="close.png" alt="close" />
