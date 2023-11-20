@@ -1,12 +1,12 @@
 # Nitro Frontend Proficiency Test
 
-Display posts on a tree view
+Display posts as a tree view with post editing functionality
 
 Technologies used: HTML, CSS, SCSS, Javascript, React, Typescript
 
 ## Frontend
 
-Posts are fetched from the backend server on page load. If for some reason the request fails then the posts are loaded from a JSON file from inside the `src` folder. The posts are shown in a tree view sorted by week by default. Posts can be sorted either by week, location or author.
+Posts are fetched from the backend server on page load. If for some reason the request fails (like when the backend is not running) then the posts are loaded from a JSON file from inside the `src` folder. The posts are shown in a tree view sorted by week by default. Posts can be sorted either by week, location or author.
 
 Clicking a post element reveals additional post related information such as author, location, date and edit button.
 
@@ -38,4 +38,4 @@ API URL: `http://localhost:3100/get-posts`
 
 ### Steps to run backend
 
-Run `node index.js` command in the command line to run the backend locally in a dev environment.
+Run `node index.js` command in the command line to run the backend locally.
