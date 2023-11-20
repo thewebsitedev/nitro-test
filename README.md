@@ -39,3 +39,7 @@ API URL: `http://localhost:3100/get-posts`
 ### Steps to run backend
 
 Run `node index.js` command in the command line to run the backend locally.
+
+## Credits
+
+Created by Gautam Thapar
