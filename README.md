@@ -12,6 +12,8 @@ Clicking a post element reveals additional post related information such as auth
 
 You can edit a post's author and location by clicking on the edit icon (a small pencil icon next to the post date). The modal window which appears on clicking the edit icon contains the form to edit author and location of that particular post.
 
+> ℹ️ Make sure to have Node and npm installed on your system before you begin installation.
+
 ### Frontend Installation
 
 1. Navigate to the frontend folder through command line.
