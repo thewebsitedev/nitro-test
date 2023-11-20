@@ -43,6 +43,17 @@ body {
   }
 }
 
+.posts-title {
+  cursor: pointer;
+  .toggle {
+    width: 10px;
+    margin-left: 5px;
+    opacity: 1;
+    transform: rotate(0deg);
+    transition: 0.3s all;
+  }
+}
+
 .posts {
   margin-bottom: 20px;
   .post {
@@ -95,7 +106,27 @@ body {
       border: 1px solid $accent-color;
     }
   }
-  
+}
+
+.posts-group {
+  > .posts {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s all;
+  }
+  &.active {
+    > .posts-title {
+      .toggle {
+        transform: rotate(180deg);
+      }
+    }
+    > .posts {
+      height: 100%;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 
 .edit-form {

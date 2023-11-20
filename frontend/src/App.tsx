@@ -27,9 +27,11 @@ function App() {
   const [filter, setFilter] = useState<string>("week")
   const [edit, setEdit] = useState<boolean>(false)
   const [editPost, setEditPost] = useState<editPost>(defaultPost)
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(()=>{
     const fetchPosts = async () => {
+      setLoading(true)
       try {
         const response = await fetch('http://localhost:3100/get-posts')
         const jsonData = await response.json();
@@ -38,7 +40,7 @@ function App() {
         console.log(`fetch error: ${(e as Error).message} therefore loading posts from a file`)
         setPosts(data)
       }
-      
+      setLoading(false)
     }
     fetchPosts()
   },[])
@@ -161,8 +163,11 @@ function App() {
       <div className='posts-wrapper'>
         {
           Object.keys(filteredPosts).length > 0 && Object.keys(filteredPosts).map((key: string)=>{
-            return <div key={key}>
-              <h4 className='posts-title'>{key}</h4>
+            return <div className='posts-group active' key={key}>
+              <h4 className='posts-title' onClick={(e: React.MouseEvent)=>{
+                const target = e.target as HTMLElement
+                target.parentElement?.classList.toggle('active')
+              }}>{key} <img className="toggle" src="toggle.png" alt="group toggle" /></h4>
               <div className="posts">
                 {
                   filteredPosts[key].map((post, idx)=>{
@@ -188,7 +193,7 @@ function App() {
         }
         {
           ! Object.keys(filteredPosts).length ? <div>
-            <h4>Posts not found</h4>
+            <h4>{ loading ? 'Loading posts...' : 'Posts not found'}</h4>
             <div className="posts">
               <div className='post'>There are no posts in the database yet.</div>
             </div>
